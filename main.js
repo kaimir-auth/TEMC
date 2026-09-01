@@ -90,63 +90,8 @@
       });
     }, { passive: true });
   }
-  // Photo placeholders: each page-scoped key owns exactly one stored image.
-  var placeholderImageStorageKey = 'temc.placeholderImages.v1';
-  var placeholderImages = {};
+  // Clean up any legacy dev placeholder overrides from localStorage if present
   try {
-    placeholderImages = JSON.parse(localStorage.getItem(placeholderImageStorageKey) || '{}');
-  } catch (_) {
-    placeholderImages = {};
-  }
-
-  function setPlaceholderImage(placeholder, source) {
-    var image = placeholder.querySelector('img');
-    if (!image) {
-      image = document.createElement('img');
-      image.alt = placeholder.getAttribute('data-label') || 'Selected image';
-      placeholder.appendChild(image);
-    }
-    image.src = source;
-  }
-
-  document.querySelectorAll('.ph[data-image-key]').forEach(function (placeholder) {
-    var imageKey = placeholder.getAttribute('data-image-key');
-    if (placeholderImages[imageKey]) setPlaceholderImage(placeholder, placeholderImages[imageKey]);
-
-    placeholder.tabIndex = 0;
-    placeholder.setAttribute('role', 'button');
-    placeholder.setAttribute('title', 'Select an image for this placeholder');
-
-    function selectImage() {
-      var input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.addEventListener('change', function () {
-        var file = input.files && input.files[0];
-        if (!file) return;
-        var reader = new FileReader();
-        reader.addEventListener('load', function () {
-          placeholderImages[imageKey] = reader.result;
-          try {
-            localStorage.setItem(placeholderImageStorageKey, JSON.stringify(placeholderImages));
-          } catch (_) {
-            delete placeholderImages[imageKey];
-            return;
-          }
-          setPlaceholderImage(placeholder, reader.result);
-        });
-        reader.readAsDataURL(file);
-      });
-      input.click();
-    }
-
-    placeholder.addEventListener('click', selectImage);
-    placeholder.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        selectImage();
-      }
-    });
-  });
-
+    localStorage.removeItem('temc.placeholderImages.v1');
+  } catch (_) {}
 })();

@@ -1,0 +1,8 @@
+{
+  "name": "The Eureka Marketing Co.",
+  "description": "Aquaculture solutions, fisheries technology, and hatchery equipment in Bangladesh since 2001.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
