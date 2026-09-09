@@ -322,6 +322,8 @@ p { margin-bottom: 1rem; }
 .ph.tall { min-height: 320px; }
 .ph.hero-ph { min-height: 380px; }
 .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); }
+.ph:has(img:not(.hidden)) { border-style: solid; border-color: var(--line); background: var(--navy-tint); box-shadow: var(--shadow); }
+.ph:has(img:not(.hidden))::after { display: none; }
 
 /* ---------- Gallery grid ---------- */
 .gallery-grid {
